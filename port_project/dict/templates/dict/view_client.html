@@ -1,0 +1,22 @@
+{% extends 'dict/base.html' %}
+
+{% block sidebar %}
+    {% include 'dict/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+  <div class="card mb-3">
+    <div class="card-header">
+      Клиент: <a href="{{ client.get_absolute_url }}"> {{ client.name }}</a>
+    </div>
+  <div class="card-body">
+          <h5 class="card-title" >{{client.name}}</h5>
+          <p class="card-text" >{{client.info}} </p>
+  </div>
+  <div class="card-footer text-muted">
+    {{client.client_dept}}
+  </div>
+  </div>
+
+{% endblock %}
+

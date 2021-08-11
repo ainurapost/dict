@@ -1,0 +1,14 @@
+{% load client_tags %}
+
+
+<div class="list-group">
+  {%  get_client_list as clients %}
+  {% for c in clients %}
+
+  <a href="{% url 'view_client' c.pk %}" class="list-group-item list-group-item-action">{{ c.name }}</a>
+  {% endfor %}
+</div>
+
+
+
+

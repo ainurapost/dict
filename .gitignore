@@ -1,0 +1,8 @@
+
+.idea
+port_project/.idea
+venv/
+
+
+port_project/dict/static
+port_project/dict/media

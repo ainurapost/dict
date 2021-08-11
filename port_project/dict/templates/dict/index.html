@@ -1,0 +1,21 @@
+{% extends 'dict/base.html' %}
+
+{% block sidebar %}
+    {% include 'dict/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 "></div>
+
+<ul>
+    {% for p in products %}
+    <li>
+    <h5>{{ p.model_code }}</h5>
+    <h5>{{ p.type }}</h5>
+    <h5>{{ p.category }}</h5>
+    <hr>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock  %}
+
