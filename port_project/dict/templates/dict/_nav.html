@@ -1,3 +1,13 @@
+{% load static %}
+
+<style>
+  .hello-msg{
+    font-size:18px;
+    color: green;
+    margin-right:20px;
+  }
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'home' %}">Главная</a>
@@ -10,29 +20,39 @@
           <a class="nav-link active" aria-current="page" href="{% url 'new_order' %}">Новый заказ</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'all_categories' %}">Все категории</a>
+          <a class="nav-link active" aria-current="page" href="#">Все категории</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'login' %}">Войти</a>
-        </li>
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+            Добавить...
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="{% url 'new_client' %}">Добавить клиента </a></li>
+            <li><a class="dropdown-item" href="{% url 'new_product' %}">Добавить товар</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
-
       </ul>
+
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
+        <div class="clear">
+
+              <a class="nav-link" href="{% url 'login' %}">Войти</a>
+          <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+
+        </div>
     </div>
   </div>
+
+<span class="hello-msg">Hello, {{request.user}}</span>
+  <span class="hello-msg">
+    <a href="{% url 'logout' %}">Logout</a>
+  </span>
+
 </nav>
 

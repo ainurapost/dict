@@ -1,6 +1,38 @@
 {% extends 'dict/base.html' %}
 
+{% block sidebar %}
+{% endblock %}
+
 {% block content %}
-<h1>{{title}}</h1>
-<p>Логин</p>
+
+<div class="form-signin" style="width: 100%;max-width: 330px;padding: 15px;margin: auto;">
+
+  <form method="post" action="">
+        {% csrf_token %}
+      <h6 class="h3 mb-3 fw-normal">Имя пользователя </h6>
+        <div class="input-group mb-3">
+          <input type="text" name="username" class="form-control" placeholder="Имя пользователя" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+
+      <h6 class="h3 mb-3 fw-normal">Пароль </h6>
+        <div class="input-group mb-3">
+          <input type="password" name="password" class="form-control" placeholder="Пароль" aria-label="Password" aria-describedby="basic-addon1">
+        </div>
+
+    {% for m in messages %}
+      <h3 style="color:green ">{{ m }}</h3>
+    {% endfor %}
+
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
+    </form>
+
+        <div class="mb-3 mt-3">
+          <label>
+              Еще не зарегистрированы? <a href="{% url 'register' %}">Зарегистрироваться</a>
+          </label>
+        </div>
+
+</div>
+
+
 {% endblock  %}

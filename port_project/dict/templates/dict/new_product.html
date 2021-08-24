@@ -1,0 +1,26 @@
+{% extends 'dict/base.html' %}
+
+{% block sidebar %}
+    {% include 'dict/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+ <h1>{{ title }}</h1>
+
+
+<form action="{% url 'new_product' %}" method="post" enctype="multipart/form-data">
+    {%  csrf_token %}
+<div class="form-error">{{ form.non_field_errors }}</div>
+
+{% for f in form %}
+  <p class="form-group">
+    <label for="{{ f.id_for_label }}">{{ f.label }}</label>
+      {{ f }}
+      <div class="invalid-feedback">
+        {{f.errors}}
+      </div>
+{% endfor %}
+
+    <button type="submit">Добавить</button>
+</form>
+{% endblock %}

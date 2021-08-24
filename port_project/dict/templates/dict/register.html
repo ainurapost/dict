@@ -1,0 +1,35 @@
+{% extends 'dict/base.html' %}
+
+{% block sidebar %}
+
+{% endblock %}
+
+{% block content %}
+
+
+<main class="form-signin" style="width: 100%;max-width: 330px;padding: 15px;margin: auto;">
+
+<h1 style="color:blue">{{title}}</h1>
+
+<form action="" method="POST">
+    {%  csrf_token %}
+    {% for field in form %}
+<h3 class="h3 mb-3 fw-normal">
+        {{ field.label }}
+        {{ field }}
+</h3>
+    {% endfor %}
+
+
+    <input type="submit" name="Создать пользователя" style="color:blue" >
+</form>
+
+    {{ form.errors }}
+
+    <div class="mb-3 mt-3">
+          <label>
+              Уже зарегистрированы? <a href="{% url 'login' %}">Войти </a>
+          </label>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'dict/base.html' %}
+
+{% block sidebar %}
+    {% include 'dict/_sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+ {% if products %}
+        {% for p in products %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    Год выпуска:  {{ p.year }}
+                </div>
+              <div class="media ">
+                 {% if p.photo %}
+                  <img  class="img-article-left- thumb" src="{{ p.photo.url }}"  >
+                 {% endif %}
+
+                <div class="media-body">
+                    <h5 class="card-title" >{{ p.model_name }}</h5>
+                    <p class="card-text" >{{ p.MW }}</p>
+                      <a href="{{ p.get_absolute_url }}" class="btn btn-primary" >{{ p.model_name }}</a>
+                </div>
+
+            </div>
+
+        {% endfor %}
+{% else %}
+        <p>No such product is available.</p>
+{% endif %}
+
+
+{% endblock %}
+

@@ -1,52 +1,48 @@
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 
 
 class Category(models.Model):
-    class ShoesType(models.TextChoices):
-        Woman = 'Ж', _('Женский')
-        Man = 'М', _('Мужской')
-
-    shoes_type = models.CharField(
-        max_length=1,
-        choices=ShoesType.choices,
-        default=ShoesType.Woman,
-            )
-
-    def __str__(self):
-        return self.shoes_type
-
-    class ShoesType2(models.TextChoices):
-        Adult = 'Взр', _('Взрослый')
-        Teen = 'Под', _('Подростковый')
-        Child = 'Дет', _('Детский')
-
-    shoes_type2 = models.CharField(
-        max_length=3,
-        choices=ShoesType2.choices,
-        default=ShoesType2.Adult,
-            )
-
-    def is_adult(self):
-        return self.shoes_type2 in {
-            self.ShoesType2.Adult,
-        }
-
-    class Material(models.TextChoices):
-        PU = 'PU', _('Polyurethane')
-        EVA = 'EVA', _('EVA')
-
-    material = models.CharField(
-        max_length=3,
-        choices=Material.choices,
-        default=Material.PU,
+    MAN_WOMAN = (
+        ('Ж', 'Женский'),
+        ('М', 'Мужской'),
     )
 
-    def is_pu(self):
-        return self.material in {
-            self.Material.PU,
-        }
+    cat = models.CharField(max_length=2, choices=MAN_WOMAN, default='Ж')
+
+    def __str__(self):
+        return self.cat
+
+    def get_absolute_url(self):
+        return reverse('view_wm', kwargs={'id': self.pk})
+
+
+class AGE(models.Model):
+    AGE = (
+        ('Взр', 'Взрослый'),
+        ('Под', 'Подростковый'),
+        ('Дет', 'Детский'),
+    )
+
+    age = models.CharField(max_length=6, choices=AGE, default='Взр')
+
+    def __str__(self):
+        return self.age
+
+
+class Material(models.Model):
+    PU_EVA = (
+        ('PU', 'Polyurethane'),
+        ('EVA', 'EVA'),
+    )
+
+    material = models.CharField(max_length=3, choices=PU_EVA, default='PU')
+
+    def __str__(self):
+        return self.material
+
+    def get_absolute_url(self):
+        return reverse('view_material', kwargs={'id': self.pk})
 
 
 class Year(models.Model):
@@ -54,6 +50,11 @@ class Year(models.Model):
 
     def __str__(self):
         return self.year
+
+    class Meta:
+        verbose_name = 'Год выпуска'
+        verbose_name_plural = 'Год выпуска'
+        ordering = ['id']
 
 
 class Color(models.Model):
@@ -69,27 +70,32 @@ class Product(models.Model):
     description = models.TextField(blank=True, verbose_name='Описание', null=True)
     photo = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name='фото', blank=True, null=True)
     is_available = models.BooleanField(default=True, verbose_name='в наличии', null=True)
-    category = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='Категория')
+    MW = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='Муж_Жен')
     color = models.ForeignKey('Color', on_delete=models.CASCADE, verbose_name='Цвет')
     year = models.ForeignKey('Year', on_delete=models.CASCADE, verbose_name='Год выпуска')
+    age = models.ForeignKey('AGE', on_delete=models.PROTECT, verbose_name='Возраст_тип')
+    material = models.ForeignKey('Material', on_delete=models.PROTECT, verbose_name='Материал')
 
     def __str__(self):
         return f'{self.pk} - {self.model_code}'
 
+    def get_absolute_url(self):
+        return reverse('view_product', kwargs={'id': self.pk})
+
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
-        ordering = ['year']
+        ordering = ['model_code']
 
 
 class Client(models.Model):
-    name = models.CharField(max_length=200, verbose_name='Наименование клиента', db_index=True)
-    info = models.CharField(max_length=500, verbose_name='Информаци о клиенте', blank=True, null=True)
+    client_name = models.CharField(max_length=200, verbose_name='Наименование клиента', db_index=True)
+    info = models.CharField(max_length=500, verbose_name='Информация о клиенте', blank=True, null=True)
     is_debtor = models.BooleanField(default=True, verbose_name='имеет задолженность', null=True)
-    client_debt = models.IntegerField(default=0)
+    client_debt = models.IntegerField(default=True)
 
     def __str__(self):
-        return self.name
+        return self.client_name
 
     def get_absolute_url(self):
         return reverse('view_client', kwargs={'id': self.pk})
@@ -97,22 +103,22 @@ class Client(models.Model):
     class Meta:
         verbose_name = 'Клиент'
         verbose_name_plural = 'Клиенты'
-        ordering = ['name']
+        ordering = ['client_name']
 
 
-class Order(models. Model):
+class Order(models.Model):
     model_code = models.ForeignKey(Product, on_delete=models.PROTECT, verbose_name='Модель товара')
-    client = models.ForeignKey(Client, on_delete=models.PROTECT, verbose_name='Наименование клиента', db_index=True)
+    client_name = models.ForeignKey(Client, on_delete=models.PROTECT, verbose_name='Наименование клиента',
+                                    db_index=True)
     price = models.IntegerField(blank=True, null=True)
     quantity = models.IntegerField(blank=True, null=True)
     debt = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата заказа')
 
     def __str__(self):
-        return f'{self.client} - {self.debt}'
+        return f'{self.client_name} - {self.debt}'
 
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
         ordering = ['-created_at']
-

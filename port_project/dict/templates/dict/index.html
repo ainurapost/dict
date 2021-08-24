@@ -10,9 +10,15 @@
 <ul>
     {% for p in products %}
     <li>
-    <h5>{{ p.model_code }}</h5>
+          <a href="{% url 'view_product' p.pk %}" class="list-group-item list-group-item-action"><h5>{{ p.model_code }}</h5></a>
+
     <h5>{{ p.type }}</h5>
-    <h5>{{ p.category }}</h5>
+    <h5>{{ p.category }} - {{ p.MW }}</h5>
+        {% if p.photo %}
+
+            <img  class="img-article-left- thumb" src="{{ p.photo.url }}"  >
+        {% endif %}
+    <h5></h5>
     <hr>
     </li>
     {% endfor %}

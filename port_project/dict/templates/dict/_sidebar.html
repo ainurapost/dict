@@ -1,14 +1,51 @@
 {% load client_tags %}
 
-
+    <h2>Список Категорий</h2>
 <div class="list-group">
-  {%  get_client_list as clients %}
-  {% for c in clients %}
+  {% get_wm_category as categories %}
+  {% for c in categories %}
+      <a href="{% url 'view_wm' c.pk %}" class="list-group-item list-group-item-action">{{ c }}</a>
+  {% endfor %}
 
-  <a href="{% url 'view_client' c.pk %}" class="list-group-item list-group-item-action">{{ c.name }}</a>
+</div>
+<br>
+
+  <h2>Возрастная категория</h2>
+<div class="list-group">
+  {% get_age_category as ages %}
+  {% for a in ages %}
+    <a href="{% url 'view_age' a.pk %}" class="list-group-item list-group-item-action">{{ a.age }}</a>
   {% endfor %}
 </div>
+<br>
 
+  <h2>Вид Сырья</h2>
+<div class="list-group">
+  {% get_material_category as materials %}
+  {% for m in materials %}
 
+  <a href="{% url 'view_material' m.pk %}" class="list-group-item list-group-item-action">{{ m.material }}</a>
+  {% endfor %}
+</div>
+<br>
+
+  <h2>Модели по годам</h2>
+<div class="list-group">
+  {% get_year_category as years %}
+  {% for y in years %}
+
+  <a href="{% url 'view_year' y.pk %}" class="list-group-item list-group-item-action">{{ y.year }}</a>
+  {% endfor %}
+</div>
+<br>
+
+    <h2>Список Клиентов</h2>
+<div class="list-group">
+  {% get_client_list as clients %}
+  {% for c in clients %}
+
+  <a href="{% url 'view_client' c.pk %}" class="list-group-item list-group-item-action">{{ c.client_name }}</a>
+  {% endfor %}
+</div>
 
 

@@ -1,0 +1,27 @@
+{% extends 'dict/base.html' %}
+
+{% block sidebar %}
+    {% include 'dict/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="card mb-3">
+    <div class="card-header">
+      Клиент: <a href="{{ product.get_absolute_url }}"> {{ product.model_code }}</a>
+    </div>
+  <div class="card-body">
+          <h5 class="card-title" >{{ product.type }}</h5>
+          <p class="card-text" >{{ product.description }} </p>
+        {% if product.photo %}
+            {{product.photo}}
+      <img src="{{ product.photo.url }}"  align="left"  alt="" width="250" height="200" >
+        {% endif %}
+  </div>
+  <div class="card-footer text-muted">
+    {{product.is_available}}, {{product.MW}},{{product.year}}, {{product.material}}
+
+  </div>
+  </div>
+
+{% endblock %}l>

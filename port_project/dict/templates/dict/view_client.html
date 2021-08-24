@@ -5,9 +5,10 @@
 {% endblock %}
 
 {% block content %}
+
   <div class="card mb-3">
     <div class="card-header">
-      Клиент: <a href="{{ client.get_absolute_url }}"> {{ client.name }}</a>
+      Клиент: <a href="{{ client.get_absolute_url }}"> {{ client.client_name }}</a>
     </div>
   <div class="card-body">
           <h5 class="card-title" >{{client.name}}</h5>
