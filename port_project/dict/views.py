@@ -52,7 +52,7 @@ def loginUser(request):
     return render(request,'dict/login.html', context)
 
 
-def logout_user(request):
+def logoutUser(request):
     logout(request)
     return redirect('login')
 
@@ -77,6 +77,7 @@ def view_product(request, id):
     return render(request, 'dict/view_product.html', context=context)
 
 
+@login_required(login_url='login')
 def view_wm(request, category_id):
     products = Product.objects.filter(MW_id=category_id)
     category = Category.objects.get(pk=category_id)
@@ -84,18 +85,21 @@ def view_wm(request, category_id):
                                                  })
 
 
+@login_required(login_url='login')
 def view_year(request, year_id):
     products = Product.objects.filter(year_id=year_id)
     years = Year.objects.get(pk=year_id)
     return render(request, 'dict/view_year.html', {'products': products, 'years': years, })
 
 
+@login_required(login_url='login')
 def view_material(request, material_id):
     products = Product.objects.filter(material_id=material_id)
     materials = Material.objects.get(pk=material_id)
     return render(request, 'dict/view_material.html', {'products': products, 'materials': materials, })
 
 
+@login_required(login_url='login')
 def view_age(request, age_id):
     products = Product.objects.filter(age_id=age_id)
     ages = AGE.objects.get(pk=age_id)
@@ -118,6 +122,7 @@ def new_client(request):
     return render(request, 'dict/new_client.html', {'form': form, 'title': 'Добавить клиента'})
 
 
+@login_required(login_url='login')
 def new_product(request):
     if request.method == 'POST':
         form = NewProductForm(request.POST, request.FILES)
