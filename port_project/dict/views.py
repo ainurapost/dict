@@ -14,8 +14,21 @@ def index(request):
     return render(request, 'dict/index.html', {'products': products, 'title': 'Главная страница'})
 
 @login_required(login_url='login')
+def order(request):
+    orders = Order.objects.all()
+    return render(request, 'dict/order.html', {'orders': orders, 'title': 'Лист заказов'})
+
+
+@login_required(login_url='login')
 def new_order(request):
-    return HttpResponse('Добавить заказ')
+    if request.method == 'POST':
+        form = NewOrderForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+    else:
+        form = NewOrderForm()
+    return render(request, 'dict/new_order.html', {'form': form, 'title': 'Новый заказ'})
 
 
 def register(request):
@@ -34,7 +47,6 @@ def register(request):
     context = {'form': form, 'title': 'Регистрация'}
     return render(request,'dict/register.html', context)
 
-
 def loginUser(request):
     if request.user.is_authenticated:
         return redirect('home')
@@ -51,11 +63,9 @@ def loginUser(request):
     context = {'title': 'Войти'}
     return render(request,'dict/login.html', context)
 
-
 def logoutUser(request):
     logout(request)
     return redirect('login')
-
 
 @login_required(login_url='login')
 def view_client(request, id):
@@ -64,7 +74,6 @@ def view_client(request, id):
     # orders = Order.objects.filter(id=pk)
 
     return render(request, 'dict/view_client.html', {'client': client, })
-
 
 @login_required(login_url='login')
 def view_product(request, id):
@@ -84,13 +93,11 @@ def view_wm(request, category_id):
     return render(request, 'dict/view_wm.html', {'products': products, 'category': category,
                                                  })
 
-
 @login_required(login_url='login')
 def view_year(request, year_id):
     products = Product.objects.filter(year_id=year_id)
     years = Year.objects.get(pk=year_id)
     return render(request, 'dict/view_year.html', {'products': products, 'years': years, })
-
 
 @login_required(login_url='login')
 def view_material(request, material_id):
@@ -98,17 +105,14 @@ def view_material(request, material_id):
     materials = Material.objects.get(pk=material_id)
     return render(request, 'dict/view_material.html', {'products': products, 'materials': materials, })
 
-
 @login_required(login_url='login')
 def view_age(request, age_id):
     products = Product.objects.filter(age_id=age_id)
     ages = AGE.objects.get(pk=age_id)
     return render(request, 'dict/view_age.html', {'products': products, 'ages': ages, })
 
-
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Page was not found</h1>')
-
 
 @login_required(login_url='login')
 def new_client(request):
@@ -116,6 +120,9 @@ def new_client(request):
         form = NewClientForm(request.POST)
         if form.is_valid():
             form.save()
+            client = form.cleaned_data.get('client_name')
+            messages.success(request, 'Клиент: ' + client + ' успешно внесен в базу данных')
+            return redirect('home')
 
     else:
         form = NewClientForm()
@@ -128,7 +135,26 @@ def new_product(request):
         form = NewProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            product = form.cleaned_data.get('model_code')
+            messages.success(request, 'Модель: ' + product + ' успешно внесена в базу данных')
+            return redirect('home')
 
     else:
         form = NewProductForm()
     return render(request, 'dict/new_product.html', {'form': form, 'title': 'Добавить товар'})
+
+
+@login_required(login_url='login')
+def new_order(request):
+    if request.method == 'POST':
+        form = NewOrderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # neworder = form.cleaned_data.get('pk')
+            client = form.cleaned_data.get('client_name')
+            # messages.success(request, 'Заказ ' +' для клиента ' + client + ' успешно внесен в базу данных')
+            return redirect('order')
+
+    else:
+        form = NewOrderForm()
+    return render(request, 'dict/new_order.html', {'form': form, 'title': 'Добавить заказ'})

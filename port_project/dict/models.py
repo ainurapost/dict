@@ -108,8 +108,7 @@ class Client(models.Model):
 
 class Order(models.Model):
     model_code = models.ForeignKey(Product, on_delete=models.PROTECT, verbose_name='Модель товара')
-    client_name = models.ForeignKey(Client, on_delete=models.PROTECT, verbose_name='Наименование клиента',
-                                    db_index=True)
+    client_name = models.ForeignKey(Client, on_delete=models.PROTECT, verbose_name='Наименование клиента')
     price = models.IntegerField(blank=True, null=True)
     quantity = models.IntegerField(blank=True, null=True)
     debt = models.IntegerField(default=0)
@@ -121,4 +120,4 @@ class Order(models.Model):
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
-        ordering = ['-created_at']
+        ordering = ['id']

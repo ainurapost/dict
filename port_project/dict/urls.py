@@ -4,8 +4,9 @@ from .forms import *
 
 urlpatterns = [
     path('', index, name='home'),
-    path('new_order/',new_order, name='new_order'),
-    path('new_client/',new_client, name='new_client'),
+    path('orders/', order, name='order'),
+    path('new_order/', new_order, name='new_order'),
+    path('new_client/', new_client, name='new_client'),
     path('new_product/', new_product, name='new_product'),
     path('login/', loginUser, name='login'),
     path('logout/', logoutUser, name='logout'),

@@ -17,7 +17,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'new_order' %}">Новый заказ</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'order' %}">Заказы</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Все категории</a>
@@ -31,7 +31,7 @@
             <li><a class="dropdown-item" href="{% url 'new_client' %}">Добавить клиента </a></li>
             <li><a class="dropdown-item" href="{% url 'new_product' %}">Добавить товар</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="{% url 'new_order' %}">Новый заказ</a></li>
           </ul>
         </li>
       </ul>
@@ -41,18 +41,19 @@
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
         <div class="clear">
-
+                {% if not request.user.is_authenticated %}
               <a class="nav-link" href="{% url 'login' %}">Войти</a>
           <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
-
+                {% endif %}
         </div>
     </div>
   </div>
 
+  {% if request.user.is_authenticated %}
 <span class="hello-msg">Hello, {{request.user}}</span>
   <span >
     <a class="hello-msg" href="{% url 'logout' %}">Logout</a>
   </span>
-
+  {% endif %}
 </nav>
 

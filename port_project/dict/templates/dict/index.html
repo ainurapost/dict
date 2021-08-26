@@ -7,6 +7,12 @@
 {% block content %}
 <div class="container mt-5 "></div>
 
+<h3>
+    {% for m in messages %}
+      <h3 style="color:green ">{{ m }}</h3>
+    {% endfor %}
+</h3>
+
 <ul>
     {% for p in products %}
     <li>
