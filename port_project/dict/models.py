@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.datetime_safe import date
 
 
 class Category(models.Model):
@@ -75,6 +76,7 @@ class Product(models.Model):
     year = models.ForeignKey('Year', on_delete=models.CASCADE, verbose_name='Год выпуска')
     age = models.ForeignKey('AGE', on_delete=models.PROTECT, verbose_name='Возраст_тип')
     material = models.ForeignKey('Material', on_delete=models.PROTECT, verbose_name='Материал')
+    delivered_date=models.DateField(default=date.today, blank=True)
 
     def __str__(self):
         return f'{self.pk} - {self.model_code}'
@@ -85,7 +87,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
-        ordering = ['model_code']
+        ordering = ['-delivered_date']
 
 
 class Client(models.Model):
@@ -93,6 +95,7 @@ class Client(models.Model):
     info = models.CharField(max_length=500, verbose_name='Информация о клиенте', blank=True, null=True)
     is_debtor = models.BooleanField(default=True, verbose_name='имеет задолженность', null=True)
     client_debt = models.IntegerField(default=True)
+
 
     def __str__(self):
         return self.client_name
@@ -105,6 +108,10 @@ class Client(models.Model):
         verbose_name_plural = 'Клиенты'
         ordering = ['client_name']
 
+    # @property
+    # def client_orders(self):
+    #     return self.client_orders.all()
+
 
 class Order(models.Model):
     model_code = models.ForeignKey(Product, on_delete=models.PROTECT, verbose_name='Модель товара')
@@ -115,7 +122,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата заказа')
 
     def __str__(self):
-        return f'{self.client_name} - {self.debt}'
+        return f'{self.model_code} - {self.client_name}'
 
     class Meta:
         verbose_name = 'Заказ'

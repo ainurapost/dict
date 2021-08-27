@@ -1,23 +1,35 @@
 {% extends 'dict/base.html' %}
 
 {% block sidebar %}
-    {% include 'dict/_sidebar.html' %}
+{% include 'dict/_sidebar.html' %}
 {% endblock %}
 
 {% block content %}
 
-  <div class="card mb-3">
+<div class="card mb-3">
     <div class="card-header">
-      Клиент: <a href="{{ client.get_absolute_url }}"> {{ client.client_name }}</a>
+        Клиент: <a href="{{ client.get_absolute_url }}"> {{ client.client_name }}</a>
     </div>
-  <div class="card-body">
-          <h5 class="card-title" >{{client.name}}</h5>
-          <p class="card-text" >{{client.info}} </p>
-  </div>
-  <div class="card-footer text-muted">
-    {{client.client_dept}}
-  </div>
-  </div>
+    <div class="card-body">
+        <h5 class="card-title">{{client.name}}</h5>
+        <p class="card-text">{{client.info}} </p>
+    </div>
+    <div class="card-footer text-muted">
+        {{client.client_dept}}
+    </div>
+</div>
 
+<h2>Заказы клиента </h2>
+ Всего заказов на сумму {{total_debt}}
+{% for order in orders %}
+<li>
+    <a href="#" class="list-group-item list-group-item-action"><h5>{{ order.model_code }}</h5></a>
+
+    <h5>{{ order.price }} * {{ order.quantity }} = {{ order.debt }} </h5>
+    <h5>Дата заказа: {{ order.created_at }}</h5>
+
+    <hr>
+</li>
+{% endfor %}
 {% endblock %}
 

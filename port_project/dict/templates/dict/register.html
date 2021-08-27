@@ -6,30 +6,40 @@
 
 {% block content %}
 
+<style>
+    input{
+        border: none;
+        outline: none;
+        border-radius: 6px;
+        padding-left: 5px;
+    }
+</style>
 
-<main class="form-signin" style="width: 100%;max-width: 330px;padding: 15px;margin: auto;">
+<div class="form-signin" style="width: 100%;max-width: 330px;padding: 15px;margin: auto;">
 
-<h1 style="color:blue">{{title}}</h1>
+    <h1 style="color:blue">{{title}}</h1>
 
-<form action="" method="POST">
-    {%  csrf_token %}
-    {% for field in form %}
-<h3 class="h3 mb-3 fw-normal">
-        {{ field.label }}
-        {{ field }}
-</h3>
-    {% endfor %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+        <h3 class="h3 mb-3 fw-normal">
+            {{ field.label }}
+            {{ field }}
+        </h3>
+        {% endfor %}
 
+        <button class="w-100 h-5 btn btn-lg btn-primary" type="submit">Создать пользователя</button>
 
-    <input type="submit" name="Создать пользователя" style="color:blue" >
-</form>
+    </form>
 
     {{ form.errors }}
 
     <div class="mb-3 mt-3">
-          <label>
-              Уже зарегистрированы? <a href="{% url 'login' %}">Войти </a>
-          </label>
+        <label>
+            Уже зарегистрированы? <a href="{% url 'login' %}">Войти </a>
+        </label>
     </div>
-</main>
+</div>
 {% endblock %}
+
+{% block sidebar2 %}{% endblock %}

@@ -1,27 +1,51 @@
 {% extends 'dict/base.html' %}
 
 {% block sidebar %}
-    {% include 'dict/_sidebar.html' %}
+{% include 'dict/_sidebar.html' %}
 {% endblock %}
 
 {% block content %}
 
-  <div class="card mb-3">
-    <div class="card-header">
-      Клиент: <a href="{{ product.get_absolute_url }}"> {{ product.model_code }}</a>
+<div class="card mb-3" style="background-color: rgba(255, 255, 255, 0.1);">
+    <div class="card-header text" style="color: blue;">
+        <h4>
+            Код товара: <a href="{{ product.get_absolute_url }}"> {{ product.model_code }}</a>
+        </h4>
     </div>
-  <div class="card-body">
-          <h5 class="card-title" >{{ product.type }}</h5>
-          <p class="card-text" >{{ product.description }} </p>
-        {% if product.photo %}
-            {{product.photo}}
-      <img src="{{ product.photo.url }}"  align="left"  alt="" width="250" height="200" >
-        {% endif %}
-  </div>
-  <div class="card-footer text-muted">
-    {{product.is_available}}, {{product.MW}},{{product.year}}, {{product.material}}
+    <div class="card-body">
+        <div class="media">
+            {% if product.photo %}
+            <img src="{{ product.photo.url }}" align="left" alt="" class="img-thumbnail" width="350" height="300">
+            {% else %}
+            <img src="https://i.picsum.photos/id/103/2592/1936.jpg?hmac=aC1FT3vX9bCVMIT-KXjHLhP6vImAcsyGCH49vVkAjPQ"
+                 align="left" alt="" class="img-thumbnail" width="400" height="350">
+            {% endif %}
+            <div class="media-body" style="ml-3">
+                <br>
+                <br>
 
-  </div>
-  </div>
+                <h4 class="card-title">Модель : {{product.model_code}}</h4>
+                <h5></h5>
+                <p class="card-text">Тип: {{product.type}} </p>
+                <p class="card-text">Возрастная категория: {{product.age}} </p>
+                <p class="card-text">Сделано из: {{product.material}} </p>
 
-{% endblock %}l>
+                <p class="card-text">Год производства: {{product.year}} </p>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <p class="card-text">Описание: {{product.description}} </p>
+                <br>
+            </div>
+        </div>
+        <div class="card-footer text">
+            Наличие товара: {{product.is_available}},  Дата поставки:{{ product.delivered_date }}
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block sidebar2 %}{% endblock %}

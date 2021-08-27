@@ -1,10 +1,11 @@
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from .models import Product, Client, Order, Category, Year, Material, AGE
+from .models import *
 from .forms import *
 
 
@@ -69,18 +70,26 @@ def logoutUser(request):
 
 @login_required(login_url='login')
 def view_client(request, id):
-    debt = 0
     client = get_object_or_404(Client, pk=id)
-    # orders = Order.objects.filter(id=pk)
+    orders = Order.objects.filter(client_name_id=id)
+    debt=0
+    for order in orders:
+        debt += order.debt
 
-    return render(request, 'dict/view_client.html', {'client': client, })
+    context = {
+        'client': client,
+        'orders': orders,
+        'total_debt': debt
+        }
+    return render(request, 'dict/view_client.html', context=context)
 
 @login_required(login_url='login')
 def view_product(request, id):
     product = get_object_or_404(Product, pk=id)
     context = {
         'product': product,
-        'title': f'Product:{id}',
+        'title': f'Товар:{id}',
+
     }
 
     return render(request, 'dict/view_product.html', context=context)
@@ -158,3 +167,15 @@ def new_order(request):
     else:
         form = NewOrderForm()
     return render(request, 'dict/new_order.html', {'form': form, 'title': 'Добавить заказ'})
+
+
+@login_required(login_url='login')
+def search(request):
+
+    query = request.GET.get('query')
+    if request.GET.get('query') is None:
+        return render(request, 'dict/search.html')
+
+    res = Product.objects.filter(Q(model_code__icontains=request.GET.get('query')) |
+                              Q(description__icontains=request.GET.get('query')))
+    return render(request, 'dict/search.html', {'result': res, 'title': 'Поиск'})

@@ -6,29 +6,42 @@
 
 
 {% block content %}
- {% if products %}
-        {% for p in products %}
-            <div class="card mb-3">
-                <div class="card-header">
-                    Категория:  {{ p.MW }}
+{% if products %}
+    {% for p in products %}
+    <div class="card mb-2">
+        <div class="card-header">
+            Категория: <a href="{{ p.cat.get_absolute_url }}"> {{ p.MW }}</a>
+        </div>
+        <div class="card-body">
+            <div class="media">
+                {% if p.photo %}
+                <img src="{{ p.photo.url }}" align="left" alt="" class="img-thumbnail" width="250" height="200">
+                {% else %}
+                <img src="https://i.picsum.photos/id/103/2592/1936.jpg?hmac=aC1FT3vX9bCVMIT-KXjHLhP6vImAcsyGCH49vVkAjPQ"
+                     align="left" alt="" class="img-thumbnail" width="250" height="200">
+                {% endif %}
+                <div class="media-body" style="ml-3">
+                    <h5 class="card-title">Модель товара: {{p.model_code}}</h5>
+                    <p class="card-text">Тип: {{p.type}} </p>
+                    <p class="card-text">Возрастная категория: {{p.age}} </p>
+                    <p class="card-text">Сделано из: {{p.material}} </p>
+                    <a href="{{p.get_absolute_url}}" class="btn btn-primary">Подробное описание</a>
                 </div>
-              <div class="media ">
-                 {% if p.photo %}
-                  <img  class="img-article-left- thumb" src="{{ p.photo.url }}"  >
-                 {% endif %}
-
-                <div class="media-body">
-                    <h5 class="card-title" >{{ p.model_name }}</h5>
-                    <p class="card-text" >{{ p.age }}</p>
-                      <a href="{{ p.get_absolute_url }}" class="btn btn-primary" >Подробное описание</a>
-                </div>
-              </div>
             </div>
+            <div class="card-footer text-muted">
+                {{ p.delivered_date }}
+            </div>
+        </div>
+        {% empty %}
+        oops...
+    {% endfor %}
 
-        {% endfor %}
+    </div>
 {% else %}
-        <p>No such product is available.</p>
+    <p>No such product is available.</p>
 {% endif %}
 
-
 {% endblock %}
+
+
+{% block sidebar2 %}{% endblock %}

@@ -1,0 +1,10 @@
+   {% load client_tags %}
+
+    <h2>Список Клиентов</h2>
+<div class="list-group" style="width: 50%; text-align: center; background-color: blue;">
+  {% get_client_list as clients %}
+  {% for c in clients %}
+
+  <a href="{% url 'view_client' c.pk %}" class="list-group-item list-group-item-action">{{ c.client_name }}</a>
+  {% endfor %}
+</div>

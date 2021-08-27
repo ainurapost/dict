@@ -1,0 +1,28 @@
+{%  extends "dict/base.html" %}
+
+
+{% block sidebar %}
+      {% include 'news/inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+
+<form method="get" class="d-flex mb-5" >
+  <input class="form-control me-2" value = "{{ request.GET.query }}" type="search" name="query" placeholder="Search" aria-label="Search">
+  <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+
+{% if result %}
+    {% for item in result %}
+        <div class="card mb-3">
+            <div class="card-body">
+
+                <h5 class="card-title" >{{ item.model_code }}</h5>
+                <p class="card-text" >{{ item.type }} </p>
+                <a href="{{item.get_absolute_url}}" class="btn btn-primary" >Read more...</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
