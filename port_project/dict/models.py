@@ -128,3 +128,15 @@ class Order(models.Model):
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
         ordering = ['id']
+
+
+class Feedback(models.Model):
+    owner = models.CharField(max_length=200, verbose_name='Feedback owner', blank=True, null=True)
+    feedback = models.TextField(blank=True, verbose_name='Feedback', null=True)
+    created_at = models.DateField(auto_now_add=True, verbose_name='Feedback date')
+
+    def __str__(self):
+        return {self.owner}
+
+    class Meta:
+        ordering = ['id']

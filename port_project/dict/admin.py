@@ -33,10 +33,19 @@ class ClientAdmin(admin.ModelAdmin):
     list_filter = ('client_name', 'is_debtor')
 
 
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ('id', 'feedback', 'owner')
+    list_display_links = ('id', 'owner' )
+    search_fields = ('owner', 'client_name')
+    list_filter = ('owner',)
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Year, YearAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Client, ClientAdmin)
+
+admin.site.register(Feedback, FeedbackAdmin)
 
 # admin.site.register(Category, CategoryAdmin)
 

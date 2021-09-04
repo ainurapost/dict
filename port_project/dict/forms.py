@@ -8,11 +8,22 @@ inputAttrs = {
     'class': "form-control"
 }
 
+
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = '__all__'
+        widgets = {
+            'owner': forms.TextInput(attrs=inputAttrs),
+            'feedback': forms.Textarea(attrs={"class": "form-control", "rows": 5}),
+
+        }
 
 
 class NewClientForm(forms.ModelForm):

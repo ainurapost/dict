@@ -8,9 +8,7 @@ from django.contrib.auth.decorators import login_required
 from itertools import chain
 
 
-
 from .forms import *
-
 
 
 def landing(request):
@@ -25,8 +23,6 @@ def about(request):
 def index(request):
     products = Product.objects.all()
     p = Paginator(products, 3)
-    print(p.count, p.num_pages, p.page_range)
-    print(p.page(2).has_previous())
     page_no=request.GET.get('page')
     page_products= p.get_page(page_no)
     return render(request, 'dict/index.html', {'products': products, 'title': 'Главная страница', 'page_products': page_products})
@@ -58,14 +54,6 @@ def orders_by_date(request, selected_date):
         'title': 'Заказы по дате',
         'quantity_all_orders': quantity_all_orders,
         'sales': sales
-    }
-    return render(request, 'dict/orders_by_date.html', context)
-
-def orders_by_date_client(request, selected_date, client_name_id):
-    orders = Order.objects.filter(created_at__date=selected_date).filter(client_name_id=client_name_id)
-
-    context = {
-        'orders2': orders2,
     }
     return render(request, 'dict/orders_by_date.html', context)
 
@@ -256,6 +244,22 @@ def new_order(request):
     else:
         form = NewOrderForm()
     return render(request, 'dict/new_order.html', {'form': form, 'title': 'Добавить заказ'})
+
+
+@login_required(login_url='login')
+def get_feedback(request):
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            owner = form.cleaned_data.get('owner')
+            messages.success(request, 'Ваше обращение: ' + owner + ' успешно зарегистрировано')
+            return redirect('home')
+
+    else:
+        form = FeedbackForm()
+    return render(request, 'dict/feedback.html', {'form': form, 'title': 'Обратаная связь'})
 
 
 @login_required(login_url='login')

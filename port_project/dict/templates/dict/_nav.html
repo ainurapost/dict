@@ -58,6 +58,10 @@
             <li><a class="dropdown-item text-primary" href="{% url 'new_order' %}">Новый заказ</a></li>
           </ul>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'feedback' %}">Обратная связь </a>
+        </li>
       </ul>
 
       <form method = "get" class="d-flex" style="color:#3b93bd" action="{% url 'search' %}">
