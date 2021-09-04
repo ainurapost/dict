@@ -1,0 +1,43 @@
+{% extends 'dict/base.html' %}
+
+   {% load client_tags %}
+
+{% block sidebar %}
+    {% include 'dict/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+<h2  align="center">
+    ДАТА: {{selected_date}}
+</h2>
+<h2 style="margin-left: 30px;">
+    Сумма заказов за день:{{sales}} сом <br>
+    Количество заказов за день: {{quantity_all_orders}}
+    <br>
+    <br>
+</h2>
+
+
+<ul>
+    {% for order in orders %}
+    <li>
+        <h4>
+           <a href="{% url 'view_product' order.client_name.pk %}" style="width: 100%; text-align: center; background-color: rgba(255, 255, 255, 0.1);"> Модель товара: {{ order.model_code }}</a>
+            <a href="#" style="width: 70%; text-align: center; background-color: rgba(255, 255, 255, 0.1); margin-left: 20px;"> Клиент: {{ order.client_name }}</a>
+        </h4>
+
+    <h5>{{ order.price }} * {{ order.quantity }} = {{ order.debt }} </h5>
+
+
+    <hr>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock  %}
+
+
+{% block  sidebar2 %}
+
+{{ orders2 }}
+
+{% endblock %}

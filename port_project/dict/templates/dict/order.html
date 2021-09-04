@@ -1,5 +1,7 @@
 {% extends 'dict/base.html' %}
 
+   {% load client_tags %}
+
 {% block sidebar %}
     {% include 'dict/_sidebar.html' %}
 {% endblock %}
@@ -7,25 +9,42 @@
 {% block content %}
 <div class="container mt-5 "></div>
 
-
     {% for m in messages %}
       <h3 style="color:green ">{{ m }}</h3>
     {% endfor %}
 
+<h2 style="color:green " align="center">Список всех заказов</h2>
 
-<ul>
-    {% for order in orders %}
-    <li>
-          <a href="#" class="list-group-item list-group-item-action"><h5>{{ order.model_code }}</h5></a>
+
+{% for order in orders %}
+<div class="list-group">
+    <a href="{% url 'view_product' order.model_code.pk %}" class="list-group-item list-group-item-action" style="width: 100%; text-align: center; background-color: rgba(255, 255, 255, 0.1);"><h5>{{ order.model_code }}</h5></a>
 
     <h5>{{ order.price }} * {{ order.quantity }} = {{ order.debt }} </h5>
     <h5>Дата заказа: {{ order.created_at }}</h5>
 
+</div>
 
-    <hr>
-    </li>
     {% endfor %}
-</ul>
 {% endblock  %}
 
-{% block  sidebar2 %}{% endblock %}
+
+{% block sidebar2 %}
+<br>
+<br>
+
+<h2> <span style="color:green;">Заказы по дате: </span></h2>
+
+<div class="list-group" >
+  {% get_order_dates as dates %}
+  {% for d in dates %}
+
+  <a href="{% url 'orders_by_date' selected_date=d %}" class="list-group-item list-group-item-action" style="width: 70%; text-align: center; background-color: rgba(255, 255, 255, 0.1);">{{ d }}</a>
+  {% endfor %}
+    <br>
+    <br>
+    <h3> <span style="color:green;">Общая сумму заказов на: {{ clear_total }} сом</span> </h3>
+</div>
+
+
+{% endblock %}

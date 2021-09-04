@@ -4,7 +4,7 @@
   .hello-msg{
     font-size:18px;
     color: blue;
-    margin-right:20px;
+
 
 
   }
@@ -44,7 +44,7 @@
           <a class="nav-link active" aria-current="page" href="{% url 'order' %}">Заказы</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Все категории</a>
+          <a class="nav-link active" aria-current="page" href="#">Заказы по дате</a>
         </li>
 
         <li class="nav-item dropdown">
@@ -60,9 +60,9 @@
         </li>
       </ul>
 
-      <form class="d-flex bg-primary "  >
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" >
-        <button class="btn btn-outline-success " type="submit">Search</button>
+      <form method = "get" class="d-flex" style="color:#3b93bd" action="{% url 'search' %}">
+        <input class="form-control me-2" name="query"   type="search" placeholder="Search" aria-label="Search" >
+        <button class="btn btn-outline-success" style="color:#3b93bd" type="submit" >Search</button>
       </form>
         <div class="clear d-flex">
                 {% if not request.user.is_authenticated %}
@@ -76,10 +76,11 @@
   </div>
 
   {% if request.user.is_authenticated %}
-<span class="hello-msg">Hello, {{request.user}}</span>
-  <span >
-    <a class="hello-msg" href="{% url 'logout' %}">Logout</a>
-  </span>
+<span class="hello-msg" >Hello,   </span>
+<span class="hello-msg" style="margin-left:5px"> {{request.user}}  </span >
+
+    <a class="hello-msg"     style="margin-left:35px; margin-right:10px;" href="{% url 'logout' %}">Logout</a>
+
   {% endif %}
 </nav>
 

@@ -122,7 +122,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата заказа')
 
     def __str__(self):
-        return f'{self.model_code} - {self.client_name}'
+        return f'{self.model_code}'
 
     class Meta:
         verbose_name = 'Заказ'

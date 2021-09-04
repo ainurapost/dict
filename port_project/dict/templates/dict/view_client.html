@@ -6,21 +6,10 @@
 
 {% block content %}
 
-<div class="card mb-3">
-    <div class="card-header">
-        Клиент: <a href="{{ client.get_absolute_url }}"> {{ client.client_name }}</a>
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">{{client.name}}</h5>
-        <p class="card-text">{{client.info}} </p>
-    </div>
-    <div class="card-footer text-muted">
-        {{client.client_dept}}
-    </div>
-</div>
+<br>
+<br>
+<h2>Заказы клиента {{ client.client_name }}</h2>
 
-<h2>Заказы клиента </h2>
- Всего заказов на сумму {{total_debt}}
 {% for order in orders %}
 <li>
     <a href="#" class="list-group-item list-group-item-action"><h5>{{ order.model_code }}</h5></a>
@@ -33,3 +22,25 @@
 {% endfor %}
 {% endblock %}
 
+{% block sidebar2 %}
+<br>
+<br>
+<h2>Карточка клиента </h2>
+<div class="card mb-3" >
+    <div class="card-header">
+        Клиент: <span style="color:blue;">{{ client.client_name }}</span>
+
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{client.name}}</h5>
+        <p class="card-text"> Информация о клиенте: {{client.info}} </p>
+        <br>
+        Количество заказов: <h3>{{qty_orders}} </h3>
+        Всего заказов на сумму: <h3>{{total_debt}}  сом</h3>
+    </div>
+    <div class="card-footer text-muted">
+        {{client.client_dept}}
+    </div>
+</div>
+
+{% endblock %}

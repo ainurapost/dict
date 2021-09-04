@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../static/dict/css/base.css">
+    <link type="text/css" rel="stylesheet" href="{% static 'dict/css/styles.css' %}"/>
+</head>
+
+<style>
+    body{
+        background: rgb(54,195,179);
+        background: radial-gradient(circle, rgba(54,195,179,1) 5%, rgba(109,141,242,1) 100%);
+}
+
+    .img-fluid{
+        max_width: 100%;
+        height: auto}
+
+    .img{
+
+        border: 5px solid #555;
+        margin: 100px;
+        padding:100px;
+}}
+
+</style>
+<body>
+
+<img src="../../static/dict/images/pngtree-shoes.jpg" class="img-fluid" alt="..." align="left"  width="820" height="300">
+
+<br>
+<br>
+<div class="text" style="margin-right: 40px" align="center">
+<h2>Добро пожаловать на сайт </h2>
+<h1 class="text" align="center" style=" color: darkorange; "> B-STYLE</h1>
+<br>
+
+<h3>
+  <span >
+
+    <a class="hello-msg" href="{% url 'login' %}">Войти</a>
+|
+
+          <a class="hello-msg" href="{% url 'register' %}">Зарегистрироваться</a>
+  </span>
+    <br>
+    <br>
+     <br>
+    <br>
+   <img src="../../static/dict/images/pc.jpg" class="rounded mx-auto d-block" alt="right"  style="border-image-10"    align="right"  width="330" height="300">
+
+</h3>
+        <br>
+    <br>
+    <br>
+    <br>
+        <br>
+    <br>
+    <br>
+        <br>
+    <br>
+
+ <h3><a class="hello-msg" style="margin-left: 190px" href="#" >Войти как сотрудник</a></h3>
+
+</div>
+
+{% block footer %}
+    <!-- Footer-->
+    <footer class="py-4 fixed-bottom bg-dark" >
+        <div class="container"><p class="m-0 text-center text-white">
+            Copyright &copy; Your Website 2021 www.bstyle.com +996 312 700 700 Bishkek/Kyrgyzstan
+        </p></div>
+    </footer>
+{% endblock %}
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+</body>
+</html>

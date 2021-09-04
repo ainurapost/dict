@@ -41,11 +41,46 @@
             </div>
         </div>
         <div class="card-footer text">
-            Наличие товара: {{product.is_available}},  Дата поставки:{{ product.delivered_date }}
+            Наличие товара: {{product.is_available}}, Дата поставки:{{ product.delivered_date }} <br>
+
+            Максимальная цена продажи: <span style="color:blue;">{{ max_price }} сом</span><br>
+            Минимальная цена продажи: <span style="color:blue;">{{ min_price }} сом</span>
 
         </div>
     </div>
 </div>
 {% endblock %}
 
-{% block sidebar2 %}{% endblock %}
+{% block sidebar2 %}
+
+<h2>Все заказы по модели: <span style="color:blue;">{{ product.model_code }}</span></h2>
+
+
+<div class="card mb-5">
+    <div class="card-header">
+        Количество заказов: <span style="color:blue">{{qty_orders}}</span> <br>
+        Всего заказов на сумму: <span style="color:blue">{{sales}} сом</span>
+    </div>
+
+
+    <div class="card-body" >
+        {% for order in orders %}
+        <h5>
+            Клиент: <a href="{% url 'view_client' order.client_name.pk %}">{{ order.client_name }}</a>
+        </h5>
+            <h7>{{ order.price }} * {{ order.quantity }} = {{ order.debt }} сом</h7>
+        <br>
+            <h7>Дата заказа: {{ order.created_at|date:"Y-m-d" }}</h7>
+        <hr>
+        {% endfor %}
+    </div>
+
+    <div class="card-footer text-muted">
+        Доля продаж по количеству <span style="color:blue">{{share}} %</span>
+        Доля продаж по сумме <span style="color:blue"> {{share2}} %</span>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -2,7 +2,7 @@
 
 
 {% block sidebar %}
-      {% include 'news/inc/_sidebar.html' %}
+    {% include 'dict/_sidebar.html' %}
 {% endblock %}
 
 {% block content %}
@@ -13,16 +13,21 @@
 </form>
 
 {% if result %}
-    {% for item in result %}
-        <div class="card mb-3">
+    {% for res in result %}
+        <div class="card mb-3" style="background-color: rgba(255, 255, 255, 0.1);">
             <div class="card-body">
+                <h5 class="card-title" >{{ res.model_code }}</h5>
+                <p class="card-text" >{{ res.type }} </p>
+                <a href="{{res.get_absolute_url}}" class="btn btn-primary" >Подробно...</a>
 
-                <h5 class="card-title" >{{ item.model_code }}</h5>
-                <p class="card-text" >{{ item.type }} </p>
-                <a href="{{item.get_absolute_url}}" class="btn btn-primary" >Read more...</a>
             </div>
         </div>
     {% endfor %}
 {% endif %}
 
+{% endblock %}
+
+
+{% block sidebar2 %}
+{% include 'dict/_sidebar2.html' %}
 {% endblock %}
