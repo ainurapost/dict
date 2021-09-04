@@ -79,7 +79,7 @@ class Product(models.Model):
     delivered_date=models.DateField(default=date.today, blank=True)
 
     def __str__(self):
-        return f'{self.pk} - {self.model_code}'
+        return self.model_code
 
     def get_absolute_url(self):
         return reverse('view_product', kwargs={'id': self.pk})
@@ -122,7 +122,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата заказа')
 
     def __str__(self):
-        return f'{self.model_code}'
+        return f'{self.model_code} - {self.client_name}'
 
     class Meta:
         verbose_name = 'Заказ'

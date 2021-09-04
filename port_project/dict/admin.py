@@ -12,13 +12,31 @@ class ProductAdmin(admin.ModelAdmin):
 
 class YearAdmin(admin.ModelAdmin):
     list_display = ('id', 'year')
-    list_display_links = ('id','year')
+    list_display_links = ('id', 'year')
     search_fields = ('year',)
     list_filter = ('year',)
 
 
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'model_code', 'client_name', 'price', 'quantity', 'debt', 'created_at')
+    list_display_links = ('id', 'model_code')
+    search_fields = ('model_code', 'client_name' )
+    list_editable = ('debt',)
+    list_filter = ('model_code', 'client_name', 'created_at')
+
+
+class ClientAdmin(admin.ModelAdmin):
+    list_display = ('id', 'client_name', 'info', 'is_debtor', 'client_debt')
+    list_display_links = ('id', 'client_name')
+    search_fields = ('info', 'client_name')
+    list_editable = ('is_debtor', 'info')
+    list_filter = ('client_name', 'is_debtor')
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Year, YearAdmin)
+admin.site.register(Order, OrderAdmin)
+admin.site.register(Client, ClientAdmin)
 
 # admin.site.register(Category, CategoryAdmin)
 

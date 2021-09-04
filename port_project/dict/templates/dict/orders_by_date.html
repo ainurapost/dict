@@ -10,33 +10,50 @@
 <h2  align="center">
     ДАТА: {{selected_date}}
 </h2>
-<h2 style="margin-left: 30px;">
-    Сумма заказов за день:{{sales}} сом <br>
-    Количество заказов за день: {{quantity_all_orders}}
-    <br>
-    <br>
-</h2>
+
 
 
 <ul>
     {% for order in orders %}
-    <li>
-        <h4>
-           <a href="{% url 'view_product' order.client_name.pk %}" style="width: 100%; text-align: center; background-color: rgba(255, 255, 255, 0.1);"> Модель товара: {{ order.model_code }}</a>
-            <a href="#" style="width: 70%; text-align: center; background-color: rgba(255, 255, 255, 0.1); margin-left: 20px;"> Клиент: {{ order.client_name }}</a>
-        </h4>
+      <div class="media-body" style="ml-3">
+            <a href="{% url 'view_product' order.model_code.pk %}" class="list-group-item list-group-item-action" style="width: 100%; background-color: rgba(255, 255, 255, 0.1);"><h5> Код товара: {{ order.model_code }}<span style="color:green; margin-left: 50px;"></span> Дата заказа: {{ order.created_at|date }}</h5></a>
 
-    <h5>{{ order.price }} * {{ order.quantity }} = {{ order.debt }} </h5>
+            <h5 style="margin-left:15px;">Клиент: {{ order.client_name }} <span style="color:green; margin-left: 80px;">{{ order.price }} * {{ order.quantity }} = {{ order.debt }}</span></h5>
+          <h5></h5>
+          <br>
+      </div>
 
-
-    <hr>
-    </li>
     {% endfor %}
 </ul>
 {% endblock  %}
 
 
 {% block  sidebar2 %}
+<br>
+<br>
+
+<h2> <span >Заказы по дате: </span></h2>
+<div class="list-group" >
+    {% get_order_dates as dates %}
+    {% for d in dates %}
+
+    <a href="{% url 'orders_by_date' selected_date=d %}" class="list-group-item list-group-item-action"
+       style=" color:green; width: 70%; text-align: center; background-color: rgba(255, 255, 255, 0.1);">{{ d }}</a>
+    {% endfor %}
+    <br>
+    <br>
+
+    <h3 style="">
+    Сумма заказов за день:<span style="color:green; margin-left: 50px;">{{sales}} сом</span> <br>
+    <br>
+    Количество заказов за день: <span style="color:green; margin-left: 50px;">{{quantity_all_orders}}</span>
+    <br>
+    <br>
+
+</h3>
+</div>
+<br>
+<br>
 
 {{ orders2 }}
 

@@ -34,7 +34,7 @@ class NewProductForm(forms.ModelForm):
         widgets = {
             'model_code': forms.TextInput(attrs=inputAttrs),
             'type': forms.TextInput(attrs=inputAttrs),
-            'description': forms.Textarea(attrs={"class": "form-control", "rows": 5}),
+            'description': forms.Textarea(attrs={"class": "form-control", "rows": 2}),
         }
 
 

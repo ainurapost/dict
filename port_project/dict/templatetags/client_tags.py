@@ -1,8 +1,10 @@
 from django import template
+from django.db.models import Max
 
 from dict.models import Client, Category, AGE, Material, Year, Product, Order
 
 register = template.Library()
+
 
 
 @register.simple_tag(name='get_order_dates')

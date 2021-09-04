@@ -1,40 +1,41 @@
 {% load client_tags %}
 
-    <h3>Список Категорий</h3>
-<div class="list-group" style="width: 50%; text-align: center; background-color: blue;" >
+    <h4>Список Категорий</h4>
+<div class="list-group" style="width: 50%; text-align: center; " >
   {% get_wm_category as categories %}
   {% for c in categories %}
-      <a href="{% url 'view_wm' c.pk %}" class="list-group-item list-group-item-action">{{ c }}</a>
+      <a href="{% url 'view_wm' c.pk %}"   class="list-group-item list-group-item-action" style=" color:green; width: 70%; text-align: center; background-color: rgba(255, 255, 255, 0.1);"><b>{{ c }}</b></a>
   {% endfor %}
 
-</div>
-<br>
 
-  <h3>Возрастная категория</h3>
-<div class="list-group" style="width: 50%; text-align: center; background-color: blue;">
+</div>
+
+
+  <h4>Возрастная категория</h4>
+<div class="list-group" style="width: 50%; text-align: center; ">
   {% get_age_category as ages %}
   {% for a in ages %}
-    <a href="{% url 'view_age' a.pk %}" class="list-group-item list-group-item-action">{{ a.age }}</a>
+    <a href="{% url 'view_age' a.pk %}" class="list-group-item list-group-item-action" style=" color:green; width: 70%; text-align: center; background-color: rgba(255, 255, 255, 0.1);"><b>{{ a.age }}</b></a>
   {% endfor %}
 </div>
-<br>
 
-  <h3>Вид Сырья</h3>
-<div class="list-group" style="width: 50%; text-align: center; background-color: blue;">
+
+  <h4>Вид Сырья</h4>
+<div class="list-group" style="width: 50%; text-align: center;">
   {% get_material_category as materials %}
   {% for m in materials %}
 
-  <a href="{% url 'view_material' m.pk %}" class="list-group-item list-group-item-action">{{ m.material }}</a>
+  <a href="{% url 'view_material' m.pk %}" class="list-group-item list-group-item-action" style=" color:green; width: 70%; text-align: center; background-color: rgba(255, 255, 255, 0.1);"><b>{{ m.material }}</b></a>
   {% endfor %}
 </div>
-<br>
 
-  <h3>Модели по годам</h3>
-<div class="list-group" style="width: 50%; text-align: center; background-color: blue;">
+
+  <h4>Модели по годам</h4>
+<div class="list-group" style="width: 50%; text-align: center; ">
   {% get_year_category as years %}
   {% for y in years %}
 
-  <a href="{% url 'view_year' y.pk %}" class="list-group-item list-group-item-action">{{ y.year }}</a>
+  <a href="{% url 'view_year' y.pk %}" class="list-group-item list-group-item-action" style=" color:green; width: 70%; text-align: center; background-color: rgba(255, 255, 255, 0.1);"><b>{{ y.year }}</b></a>
   {% endfor %}
 </div>
 <br>

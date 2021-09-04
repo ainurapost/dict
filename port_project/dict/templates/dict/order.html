@@ -15,15 +15,16 @@
 
 <h2 style="color:green " align="center">Список всех заказов</h2>
 
-
 {% for order in orders %}
-<div class="list-group">
-    <a href="{% url 'view_product' order.model_code.pk %}" class="list-group-item list-group-item-action" style="width: 100%; text-align: center; background-color: rgba(255, 255, 255, 0.1);"><h5>{{ order.model_code }}</h5></a>
 
-    <h5>{{ order.price }} * {{ order.quantity }} = {{ order.debt }} </h5>
-    <h5>Дата заказа: {{ order.created_at }}</h5>
+      <div class="media-body" style="ml-3">
+            <a href="{% url 'view_product' order.model_code.pk %}" class="list-group-item list-group-item-action" style="width: 100%; background-color: rgba(255, 255, 255, 0.1);"><h5> Код товара: {{ order.model_code }}</h5></a>
 
-</div>
+            <h5 style="margin-left: 15px"> Дата заказа: {{ order.created_at|date }}<span style="color:green; margin-left: 70px;">{{ order.price }} * {{ order.quantity }} = {{ order.debt }}</span> </h5>
+          <br>
+      </div>
+
+
 
     {% endfor %}
 {% endblock  %}

@@ -1,14 +1,16 @@
+from django.core.paginator import Paginator
 from django.db.models import Q, Sum, Count, F, Min, Max
 from django.http import HttpResponseNotFound
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from itertools import chain
 
 
 
 from .forms import *
-from .templatetags import client_tags
+
 
 
 def landing(request):
@@ -16,16 +18,26 @@ def landing(request):
 
 
 @login_required(login_url='login')
+def about(request):
+    return render(request, 'dict/about.html', {'title': 'О нас'})
+
+@login_required(login_url='login')
 def index(request):
     products = Product.objects.all()
-    return render(request, 'dict/index.html', {'products': products, 'title': 'Главная страница'})
+    p = Paginator(products, 3)
+    print(p.count, p.num_pages, p.page_range)
+    print(p.page(2).has_previous())
+    page_no=request.GET.get('page')
+    page_products= p.get_page(page_no)
+    return render(request, 'dict/index.html', {'products': products, 'title': 'Главная страница', 'page_products': page_products})
 
 
 @login_required(login_url='login')
 def order(request):
-    orders = Order.objects.all()
+    orders = Order.objects.all().order_by('-created_at')
     total= Order.objects.aggregate(total_debt=Sum(F('price') * F('quantity')))
     clear_total=total['total_debt']
+
     return render(request, 'dict/order.html', {'orders': orders, 'title': 'Лист заказов', 'clear_total': clear_total})
 
 
@@ -41,7 +53,7 @@ def orders_by_date(request, selected_date):
 
     context = {
         'orders': orders,
-        'orders2': orders2,
+
         'selected_date': selected_date,
         'title': 'Заказы по дате',
         'quantity_all_orders': quantity_all_orders,
@@ -253,9 +265,15 @@ def search(request):
     if request.GET.get('query') is None:
         return render(request, 'dict/search.html')
 
-    res = Product.objects.filter(Q(model_code__icontains=request.GET.get('query')) |
+    res1 = Product.objects.filter(Q(model_code__icontains=request.GET.get('query')) |
                                  Q(description__icontains=request.GET.get('query')) |
                                  Q(type__icontains=request.GET.get('query')))
+
+    res2 = Client.objects.filter(Q(client_name__icontains=request.GET.get('query')) |
+                                 Q(info__icontains=request.GET.get('query')))
+
+
+    res = list(chain(res1, res2))
     print(res)
     return render(request, 'dict/search.html', {'result': res, 'title': 'Поиск'})
 

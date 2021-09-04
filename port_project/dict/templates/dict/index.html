@@ -11,42 +11,58 @@
 {% endfor %}
 
 
-{% for p in products %}
 <div class="card mb-3">
-    {% for p in products %}
+    {% for p in page_products %}
     <div class="card-header">
-        Категория: <a href="{{ p.MW_id.get_absolute_url }}"> {{ p.MW }}</a>
+        Категория: <a href="{{ p.MW_id.get_absolute_url }}"> {{ p.MW }} </a>
+        <span style="margin-left: 100px;">Дата поставки: {{ p.delivered_date }}</span>
     </div>
     <div class="card-body">
         <div class="media">
             {% if p.photo %}
-            <img src="{{ p.photo.url }}" align="left" alt="" class="img-thumbnail" width="250" height="200">
+            <img src="{{ p.photo.url }}" align="left" alt="" class="img-thumbnail" width="200" height="140">
             {% else %}
             <img src="https://i.picsum.photos/id/103/2592/1936.jpg?hmac=aC1FT3vX9bCVMIT-KXjHLhP6vImAcsyGCH49vVkAjPQ"
-                 align="left" alt="" class="img-thumbnail" width="250" height="200">
+                 align="left" alt="" class="img-thumbnail" width="200" height="140">
             {% endif %}
-            <div class="media-body" style="ml-3">
-                <h5 class="card-title">Модель товара: {{p.model_code}}</h5>
+            <div class="media-body" style="ml-0">
+                <h5 class="card-title">Модель товара: {{p.model_code}}, </h5>
                 <p class="card-text">Тип: {{p.type}} </p>
-                <p class="card-text">Возрастная категория: {{p.age}} </p>
-                <p class="card-text">Сделано из: {{p.material}} </p>
-                <a href="{{p.get_absolute_url}}" class="btn btn-primary">Подробное описание</a>
+                <p class="card-text">Возрастная категория: {{p.age}}, материал: {{p.material}} </p>
+                <p class="card-text"></p>
+                <a href="{{p.get_absolute_url}}" class="btn btn-primary" style="margin-left: 250px;">Подробнее</a>
             </div>
         </div>
-        <div class="card-footer text-muted">
-            {{ p.delivered_date }}
-        </div>
+
     </div>
     {% empty %}
     oops...
     {% endfor %}
 </div>
-{% endfor %}
+
 
 {% endblock  %}
 
 {% block sidebar2 %}
 
 {% include 'dict/_sidebar2.html' %}
-
+<br>
+<br>
+<div class="pagination" style="">
+    <span class="step-links">
+        {% if page_products.has_previous %}
+            <a href="?page=1">&laquo; Перв.</a>
+            <a href="?page={{ page_products.previous_page_number }}">Пред.</a>
+        {% endif %}
+<b>
+        <span class="current" style="color:green;">
+            Стр. {{ page_products.number }} из {{ page_products.paginator.num_pages }}.
+        </span>
+</b>
+        {% if page_products.has_next %}
+            <a href="?page={{ page_products.next_page_number }}">След.</a>
+            <a href="?page={{ page_products.paginator.num_pages }}">Посл. &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}

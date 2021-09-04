@@ -16,8 +16,8 @@
     {% for res in result %}
         <div class="card mb-3" style="background-color: rgba(255, 255, 255, 0.1);">
             <div class="card-body">
-                <h5 class="card-title" >{{ res.model_code }}</h5>
-                <p class="card-text" >{{ res.type }} </p>
+                <h5 class="card-title" >{{ res.model_code }} {{res.client_name}}</h5>
+                <p class="card-text" >{{ res.type }} {{res.info}} </p>
                 <a href="{{res.get_absolute_url}}" class="btn btn-primary" >Подробно...</a>
 
             </div>
